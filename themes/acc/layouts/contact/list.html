@@ -72,38 +72,12 @@
             </div>
 
             <!-- Hidden Fields Filled by JS -->
-            <fieldset class="rounded border border-dark-subtle mt-3 p-3 d-none">
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="os" class="form-label">OS</label>
-                 <input name="os" id="os" type="text" readonly="readonly" class="form-control" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="browser" class="form-label">Browser</label>
-                  <input name="browser" id="browser" type="text" readonly="readonly" class="form-control" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="lang" class="form-label">Language</label>
-                  <input name="lang" id="lang" type="text" readonly="readonly" class="form-control" required>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-4">
-                  <label for="ip" class="form-label">Public IP</label>
-                  <input name="ip" id="ip" type="text" readonly="readonly" class="form-control" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="isp" class="form-label">ISP</label>
-                  <input name="isp" id="isp" type="text" readonly="readonly" class="form-control" required>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-4">
-                  <label for="country" class="form-label">Country</label>
-                  <input name="country" id="country" type="text" readonly="readonly" class="form-control" required>
-                </div>
-              </div>
-            </fieldset>
+              <input name="os" id="os" type="hidden" readonly="readonly">
+              <input name="browser" id="browser" type="hidden" readonly="readonly">
+              <input name="lang" id="lang" type="hidden" readonly="readonly">
+              <input name="ip" id="ip" type="hidden" readonly="readonly">
+              <input name="isp" id="isp" type="hidden" readonly="readonly">
+              <input name="country" id="country" type="hidden" readonly="readonly">
 
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
