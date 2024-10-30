@@ -65,18 +65,17 @@
                 const minDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format for min date
             
                 dateInput.addEventListener('focus', (e) => {
-                  // Set the type to 'date' to allow editing and restore the actual date value
                   dateInput.type = 'date';
                   dateInput.min = minDate;
                   if (selectedDateValue) {
-                    dateInput.value = selectedDateValue; // Restore the actual date for editing
+                    dateInput.value = selectedDateValue;
                   }
                 });
             
                 dateInput.addEventListener('blur', (e) => {
                   if (dateInput.value) {
                     const selectedDate = new Date(dateInput.value);
-                    selectedDateValue = dateInput.value; // Store the actual date in YYYY-MM-DD format
+                    selectedDateValue = dateInput.value;
             
                     const dayOfWeek = selectedDate.toLocaleDateString('en-GB', { weekday: 'long' });
                     const day = selectedDate.getDate();
@@ -95,10 +94,10 @@
                     
                     const formattedDate = `${dayOfWeek}, ${day}${daySuffix(day)} ${month} ${year}`;
                     
-                    dateInput.type = 'text'; // Switch back to text type for display
-                    dateInput.value = formattedDate; // Display formatted date
+                    dateInput.type = 'text';
+                    dateInput.value = formattedDate;
                   } else {
-                    dateInput.type = 'text'; // Reset to text if no date selected
+                    dateInput.type = 'text';
                     dateInput.placeholder = "Day, DDth Month YYYY";
                   }
                 });
@@ -135,6 +134,26 @@
         </div>
       </form>
       </div>
+
+      <!-- Google Map Section -->
+      {{ if site.Params.google_map.enable }}  
+      <div class="mt-12">
+        <h3 class="text-center text-xl font-bold mb-4">Find Us Here</h3>
+        <div class="flex justify-center">
+          <iframe
+            src= "{{ site.Params.google_map.map_embed }}"
+            width="100%"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            class="rounded-md border-2 border-gray-300 shadow-md"
+          ></iframe>
+        </div>
+      </div>
+      {{ end }}
+      <!-- End Google Map Section -->
+
       <!-- JavaScript for User Agent Integration -->
       <script src="{{site.Params.contact_form_action | safeURL}}/js/user-agent.min.js"></script>
       <script>
