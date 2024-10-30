@@ -2,7 +2,6 @@
 title: "Contact"
 meta_title: "Contact"
 description: "Contact"
-layout: "contact"
 draft: false
 ---
 
@@ -11,7 +10,6 @@ draft: false
 * **Phone: 03 9898 2889** 
 * **Phone: 03 9899 9100** 
 * **Open by Appointment** 
-
-#Contant Form is under testing. Please Email all Enquire to info@alwaysclassiccars.com.au
-
+* **
+Contant Form is not working as of 30-10-24. Please Email all Enquire to info@alwaysclassiccars.com.au
 
