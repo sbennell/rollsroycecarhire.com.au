@@ -97,11 +97,8 @@ sidebar = ["tags"]
 
 # google map
 [google_map]
-enable = false
-map_api_key = "AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" #AIzaSyCaGlA1U0fjMFZRti3LDrpgfGp715ek_XQ
-map_latitude = "-37.824830"
-map_longitude = "145.113730"
-map_marker = "images/marker.png"
+enable = true
+map_embed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.5077492674777!2d145.1136558!3d-37.824997499999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad64128571e6121%3A0xd7d8947480ef8b14!2s360%20Elgar%20Rd%2C%20Box%20Hill%20VIC%203128!5e0!3m2!1sen!2sau!4v1730327287970!5m2!1sen!2sau"
 
 
 # Subscription
