@@ -27,22 +27,23 @@
 
             <div class="mb-6 text-left">
               <label for="name" class="form-label">Full Name <span class="text-red-500">*</span></label>
-              <input id="name" name="name" class="form-input" placeholder="John Doe" type="text" required>
+              <input id="name" name="name" class="form-input" placeholder="Full Name" type="text" required>
             </div>
 
             <div class="mb-6 text-left">
               <label for="phone" class="form-label">Phone <span class="text-red-500">*</span></label>
-              <input id="phone" name="phone" class="form-input" placeholder="123-456-7890" type="tel">
+              <input id="phone" name="phone" class="form-input" placeholder="Contact Number" type="tel">
             </div>
 
             <div class="mb-6 text-left">
               <label for="email" class="form-label">Working Mail <span class="text-red-500">*</span></label>
-              <input id="email" name="email" class="form-input" placeholder="john.doe@email.com" type="email" required>
+              <input id="email" name="email" class="form-input" placeholder="Email Address" type="email" required>
             </div>
 
             <div class="mb-6 text-left">
               <label for="event-type" class="form-label">Event Type <span class="text-red-500">*</span></label>
               <select id="event-type" name="event-type" class="form-input">
+                <option value="" disabled selected>Please Select</option>
                 <option value="Wedding">Wedding</option>
                 <option value="Birthday">Birthday</option>
                 <option value="School Formals">School Formals</option>
@@ -53,24 +54,67 @@
 
             <div class="mb-6 text-left">
               <label for="event-date" class="form-label">Date of Event <span class="text-red-500">*</span></label>
-              <input id="event-date" name="event-date" class="form-input" type="date" required value="">
+              <input id="event-date" name="event-date" class="form-input" type="text" placeholder="Event Date" required>
             </div>
-            
+
             <script>
               document.addEventListener('DOMContentLoaded', () => {
-                const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-                document.getElementById('event-date').setAttribute('min', today); // Set min attribute to today
+                const dateInput = document.getElementById('event-date');
+                let selectedDateValue = ''; // Store the actual date value in YYYY-MM-DD format
+            
+                const today = new Date();
+                const minDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format for min date
+            
+                dateInput.addEventListener('focus', (e) => {
+                  // Set the type to 'date' to allow editing and restore the actual date value
+                  dateInput.type = 'date';
+                  dateInput.min = minDate;
+                  if (selectedDateValue) {
+                    dateInput.value = selectedDateValue; // Restore the actual date for editing
+                  }
+                });
+            
+                dateInput.addEventListener('blur', (e) => {
+                  if (dateInput.value) {
+                    const selectedDate = new Date(dateInput.value);
+                    selectedDateValue = dateInput.value; // Store the actual date in YYYY-MM-DD format
+            
+                    const dayOfWeek = selectedDate.toLocaleDateString('en-GB', { weekday: 'long' });
+                    const day = selectedDate.getDate();
+                    const month = selectedDate.toLocaleDateString('en-GB', { month: 'long' });
+                    const year = selectedDate.getFullYear();
+            
+                    const daySuffix = (day) => {
+                      if (day >= 11 && day <= 13) return 'th';
+                      switch (day % 10) {
+                        case 1: return 'st';
+                        case 2: return 'nd';
+                        case 3: return 'rd';
+                        default: return 'th';
+                      }
+                    };
+                    
+                    const formattedDate = `${dayOfWeek}, ${day}${daySuffix(day)} ${month} ${year}`;
+                    
+                    dateInput.type = 'text'; // Switch back to text type for display
+                    dateInput.value = formattedDate; // Display formatted date
+                  } else {
+                    dateInput.type = 'text'; // Reset to text if no date selected
+                    dateInput.placeholder = "Day, DDth Month YYYY";
+                  }
+                });
               });
             </script>
+                               
 
             <div class="mb-6 text-left">
               <label for="pickup-location" class="form-label">Pickup Location</label>
-              <input id="pickup-location" name="pickup-location" class="form-input" placeholder="123 Main St" type="text">
+              <input id="pickup-location" name="pickup-location" class="form-input" placeholder="Pickup Suburb " type="text">
             </div>
 
             <div class="mb-6 text-left">
               <label for="dropoff-location" class="form-label">Drop-off Location</label>
-              <input id="dropoff-location" name="dropoff-location" class="form-input" placeholder="456 Elm St" type="text">
+              <input id="dropoff-location" name="dropoff-location" class="form-input" placeholder="Dropoff Suburb" type="text">
             </div>
 
             <div class="mb-6 text-left">
