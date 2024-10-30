@@ -53,8 +53,15 @@
 
             <div class="mb-6 text-left">
               <label for="event-date" class="form-label">Date of Event <span class="text-red-500">*</span></label>
-              <input id="event-date" name="event-date" class="form-input" type="date" required>
+              <input id="event-date" name="event-date" class="form-input" type="date" required value="">
             </div>
+            
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+                document.getElementById('event-date').setAttribute('min', today); // Set min attribute to today
+              });
+            </script>
 
             <div class="mb-6 text-left">
               <label for="pickup-location" class="form-label">Pickup Location</label>
