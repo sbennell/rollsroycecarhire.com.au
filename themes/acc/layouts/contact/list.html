@@ -1,129 +1,104 @@
 {{ define "main" }}
   {{ partial "page-header" . }}
 
-  <section class="section-sm ">
+  <section class="section">
     <div class="container">
-      <div class="row justify-center">
-        <div class="lg:col-7 mb-8 text-center">
-          {{ .Content }}
+      <div class="row gy-5">
+        <div class="col-lg-6">
+          <div class="content">{{ .Content }}</div>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="col-lg-6">
+          <form method="POST" class="row g-4" action="{{site.Params.contact_form_action | safeURL}}/send-email.php" id="contact-form">
   
-  <section class="section-sm">
-    <div class="container">
-      <div class="row">
-        <div class="md:col-10 lg:col-6 mx-auto">
-          <form action="{{ site.Params.contact_form_action }}" method="POST">
-            <div class="mb-6">
-              <label for="name" class="form-label">
-                Full Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                name="name"
-                class="form-input"
-                placeholder="John Doe"
-                type="text" />
+            <!-- Honeypot for bots -->
+            <input name="utm" type="hidden" readonly="readonly" >
+            <input name="return_to" type="hidden" readonly="readonly" >
+            <input name="template" value="default" type="hidden" readonly="readonly">
+            <input name="address" hidden>
+  
+            <!-- Name -->
+            <div class="col-lg-12">
+              <label class="mb-1" for="name">{{ i18n "name"}} <span class="text-danger">*</span></label>
+              <input class="form-control shadow-none" type="text" name="name" placeholder="{{ i18n `name`}}" required>
             </div>
-            <div class="mb-6">
-              <label for="email" class="form-label">
-                Working Mail <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                class="form-input"
-                placeholder="john.doe@email.com"
-                type="email" />
+                     
+            <!-- Email -->
+            <div class="col-lg-12">
+              <label class="mb-1" for="email">{{i18n "email"}} <span class="text-danger">*</span></label>
+              <input class="form-control shadow-none" type="email" name="email" placeholder="{{i18n `email`}}" required>
             </div>
-            <div class="mb-6">
-              <label for="message" class="form-label">
-                Anything else? <span class="text-red-500">*</span>
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                class="form-input"
-                placeholder="Message goes here..."
-                rows="8"></textarea>
+  
+            <!-- phone -->
+            <div class="col-lg-12">
+              <label class="mb-1" for="phone">{{i18n "contact"}} <span class="text-danger">*</span></label>
+              <input class="form-control shadow-none" type="tel" name="phone" placeholder="{{i18n `contact`}}" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+  
+            <!-- Subject -->
+            <div class="col-lg-12">
+              <label class="mb-1" for="subject">Subject <span class="text-danger">*</span></label>
+              <input class="form-control shadow-none" type="text" name="subject" placeholder="Subject" required>
+            </div>
+            
+            <!-- Message -->
+            <div class="col-lg-12">
+              <label class="mb-1" for="message">{{i18n "message"}} <span class="text-danger">*</span></label>
+              <textarea class="form-control shadow-none" name="message" rows="4" placeholder="{{i18n `message`}}" required></textarea>
+            </div>
+  
+            <!-- Hidden fields filled by user-agent.php -->
+            <fieldset class="rounded border border-dark-subtle mt-3 p-3 d-none"><!-- hidden by CSS -->
+              <div class="row">
+                  <div class="col-md-4">
+                      <label for="os" class="form-label">OS</label>
+                      <input name="os" id="os" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+                  <div class="col-md-4">
+                      <label for="browser" class="form-label">Browser</label>
+                      <input name="browser" id="browser" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+                  <div class="col-md-4">
+                      <label for="lang" class="form-label">Language</label>
+                      <input name="lang" id="lang" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+              </div>
+              <div class="row mt-3">
+                  <div class="col-md-4">
+                      <label for="ip" class="form-label">Public IP</label>
+                      <input name="ip" id="ip" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+                  <div class="col-md-4">
+                      <label for="localip" class="form-label">Local IP</label>
+                      <input name="localip" id="localip" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+                  <div class="col-md-4">
+                      <label for="isp" class="form-label">ISP</label>
+                      <input name="isp" id="isp" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+              </div>
+              <div class="row mt-3">
+                  <div class="col-md-4">
+                      <label for="country" class="form-label">Country</label>
+                      <input name="country" id="country" type="text" readonly="readonly" class="form-control" required>
+                  </div>
+              </div>
+          </fieldset>
+          
+            <div class="col-lg-12">
+              <button class="btn btn-primary btn-sm mt-2" type="submit">{{ i18n "send"}}</button>
+            </div>
+            
           </form>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- google map -->
-  {{ with site.Params.google_map }}
-    {{ if .enable }}
-      <div
-        id="map"
-        style="height: 400px;"
-        data-latitude="{{ .map_latitude }}"
-        data-longitude="{{ .map_longitude }}"
-        data-marker="{{ .map_marker | relURL }}"
-        data-marker-name="{{ site.Title }}"></div>
-    {{ end }}
+  
+  <script src="{{site.Params.contact_form_action | safeURL}}/js/user-agent.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      validate_contact("{{site.Params.contact_form_action | safeURL}}/user-agent.php");
+      });
+  </script>
+  
   {{ end }}
-
-  {{ with site.Params.subscription }}
-    {{ if .enable }}
-      <!-- subscription form -->
-      <form
-        action="{{ .mailchimp_form_action | safeURL }}"
-        method="post"
-        id="mc-embedded-subscribe-form"
-        novalidate="novalidate">
-        <div class="input-group w-75 mx-auto mb-3">
-          <input
-            type="email"
-            name="EMAIL"
-            placeholder="Email"
-            class="form-control required email mce_inline_error"
-            id="mce-EMAIL"
-            aria-required="true"
-            autocomplete="off"
-            required />
-          <button
-            class="input-group-text"
-            name="subscribe"
-            id="mc-embedded-subscribe">
-            {{ .button_label }}
-          </button>
-        </div>
-        <input
-          type="hidden"
-          name="EMAILTYPE"
-          id="mce-EMAILTYPE-0"
-          value="html" />
-        <div style="position:absolute;left:-5000px" aria-hidden="true">
-          <input type="text" name="{{ .name }}" tabindex="-1" />
-        </div>
-      </form>
-      <div id="mce-responses" class="clear">
-        <div
-          class="response text-white"
-          id="mce-error-response"
-          style="display:none"></div>
-        <div
-          class="response text-white"
-          id="mce-success-response"
-          style="display:none"></div>
-      </div>
-      <script
-        type="text/javascript"
-        src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-      <!-- /subscription form -->
-    {{ end }}
-  {{ end }}
-
-  {{ if site.Params.google_map.enable }}
-    {{ $gmap:= resources.Get "plugins/maps/google-map.js" }}
-    <script defer src="{{ $gmap.RelPermalink }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ site.Params.google_map.map_api_key }}&libraries=places"></script>
-  {{ end }}
-
-{{ end }}
